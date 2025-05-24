@@ -1,0 +1,72 @@
+#!/bin/python3
+
+"""
+    This is a wrapper for running terminal commands related to this project.
+
+    e.g. shell $ ./script build
+"""
+
+import sys
+import subprocess as p
+
+def run_command (command):
+
+    result = p.run(command, capture_output=False, text=True, shell=True)
+
+    return result.returncode
+
+if __name__ == '__main__':
+
+    # a new entry will streamline a new command
+    flags = [
+        [
+            # i don't see any benefits to using a build system at the moment, though ninja is the goal
+            'b', 
+            'build', 
+            #'clang -w -Wall --std=gnu99 $(pwd)/source/*.c -O0 -o $(pwd)/build/doom -DNORMALUNIX -D_POSIX_C_SOURCE=200112L -D_DEFAULT_SOURCE -lX11 -lm -lXext -g',
+            'gcc -w -Wall --std=gnu99 $(pwd)/source/*.c -O0 -o $(pwd)/build/doom -DNORMALUNIX -D_POSIX_C_SOURCE=200112L -D_DEFAULT_SOURCE -lX11 -lm -lXext -g',
+            'builds DOOOM'
+        ],
+        [   
+            'd', 
+            'debug', 
+            'DOOMWADDIR=$(pwd)/wads/ gdb --args $(pwd)/build/doom -regdev',
+            #'DOOMWADDIR=$(pwd)/wads/ lldb --args $(pwd)/build/doom -regdev',
+            'puts user directly into gdb debugging session'
+        ],
+        [
+            'r', 
+            'run', 
+            'DOOMWADDIR=$(pwd)/wads/ $(pwd)/build/doom -regdev',
+            'launches application'
+        ],
+        [
+            # option for bd flag. I want to build and go into debug session immediately! no patience!
+            'bd', 
+            'builddebug', 
+            'gcc -w -Wall --std=gnu99 $(pwd)/source/*.c -O0 -o $(pwd)/build/doom -DNORMALUNIX -D_POSIX_C_SOURCE=200112L -D_DEFAULT_SOURCE -lX11 -lm -lXext -g && DOOMWADDIR=$(pwd)/wads/ gdb --args $(pwd)/build/doom -regdev',
+            'builds DOOOM'
+        ]
+    ]
+
+    argc = len(sys.argv)
+    argv = sys.argv
+
+    msg = ''
+    
+    if argc == 2: # one argument allowed at a time
+        argument = argv[1]
+        for i in flags:
+            if argument in i:
+                msg = 'Command '
+
+                # treating $? like a bool - non-zero fails
+                msg += 'Failed' if run_command(i[2]) else 'Succeeded'
+                break
+
+    if argc != 2 or not msg:
+        msg = f'flags'
+        for i in flags:
+            msg += f'\n    {i[0]}, {i[1]}, - {i[3]}'
+
+    print (msg)
