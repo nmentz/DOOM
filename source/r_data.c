@@ -529,7 +529,7 @@ void R_InitTextures (void)
      * a texture is a traditional asset.
      * a patch is a peice of a texture, or modified texture
      *
-     * what i know
+     * what i know. inside of DOOM.WAD
      *      numtextures = 287
      *      nummappatches = 351
      *
@@ -608,6 +608,7 @@ void R_InitTextures (void)
 	    {
 	        patch->originx = SHORT(mpatch->originx);
 	        patch->originy = SHORT(mpatch->originy);
+			patch->patch = 16;
 	        patch->patch = patchlookup[SHORT(mpatch->patch)];
 	        if (patch->patch == -1)
 	        {

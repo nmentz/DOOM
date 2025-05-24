@@ -24,7 +24,7 @@ if __name__ == '__main__':
             'b', 
             'build', 
             #'clang -w -Wall --std=gnu99 $(pwd)/source/*.c -O0 -o $(pwd)/build/doom -DNORMALUNIX -D_POSIX_C_SOURCE=200112L -D_DEFAULT_SOURCE -lX11 -lm -lXext -g',
-            'gcc -w -Wall --std=gnu99 $(pwd)/source/*.c -O0 -o $(pwd)/build/doom -DNORMALUNIX -D_POSIX_C_SOURCE=200112L -D_DEFAULT_SOURCE -lX11 -lm -lXext -g',
+            'gcc -w -Wall --std=gnu89 $(pwd)/source/*.c -O0 -o $(pwd)/build/doom -DNORMALUNIX -D_POSIX_C_SOURCE=200112L -D_DEFAULT_SOURCE -lX11 -lm -lXext -g',
             'builds DOOOM'
         ],
         [   
@@ -44,7 +44,7 @@ if __name__ == '__main__':
             # option for bd flag. I want to build and go into debug session immediately! no patience!
             'bd', 
             'builddebug', 
-            'gcc -w -Wall --std=gnu99 $(pwd)/source/*.c -O0 -o $(pwd)/build/doom -DNORMALUNIX -D_POSIX_C_SOURCE=200112L -D_DEFAULT_SOURCE -lX11 -lm -lXext -g && DOOMWADDIR=$(pwd)/wads/ gdb --args $(pwd)/build/doom -regdev',
+            'gcc -w -Wall --std=gnu89 $(pwd)/source/*.c -O0 -o $(pwd)/build/doom -DNORMALUNIX -D_POSIX_C_SOURCE=200112L -D_DEFAULT_SOURCE -lX11 -lm -lXext -g && DOOMWADDIR=$(pwd)/wads/ gdb --args $(pwd)/build/doom -regdev',
             'builds DOOOM'
         ]
     ]
